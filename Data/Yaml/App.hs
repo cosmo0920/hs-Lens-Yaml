@@ -3,7 +3,7 @@ module Data.Yaml.App
   , getFuga
   ) where
 import Control.Lens
-import qualified Data.Aeson as A (decode, Value)
+import qualified Data.Aeson as A
 import Data.Aeson.Lens
 import Data.Maybe
 import Data.Text
