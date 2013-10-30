@@ -29,6 +29,13 @@ readSetting' val1 val2 = do
   let retval = str ^. key (pack val1) ^. key (pack val2) :: Maybe String
   return (fromJust retval)
 
+-- | set @val@ to @keyval@ place in Yaml
+setSetting :: String -> String -> IO (Maybe Value -> Maybe Value)
+setSetting val keyval = do
+  str <- readYamlFile
+  let retval = key (pack val) .~ (Just keyval) :: Maybe Value -> Maybe Value
+  return retval
+
 -- | read setting from yaml
 readYamlFile :: IO (Maybe Value)
 readYamlFile = do
