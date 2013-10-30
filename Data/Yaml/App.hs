@@ -1,6 +1,7 @@
 module Data.Yaml.App
   ( billTo
   , getFuga
+  , setSetting
   ) where
 import Control.Lens
 import qualified Data.Aeson as A
