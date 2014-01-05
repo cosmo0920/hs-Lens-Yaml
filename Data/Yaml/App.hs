@@ -1,7 +1,8 @@
 module Data.Yaml.App
   ( billTo
   , getFuga
-  , setSetting
+  , readSetting
+  , readSettingkeys
   ) where
 import Control.Lens
 import qualified Data.Aeson as A
@@ -16,26 +17,19 @@ billTo :: IO String
 billTo = readSetting "test"
 
 getFuga :: IO String
-getFuga = readSetting' "hoge" "fuga"
+getFuga = readSettingkeys "hoge" "fuga"
 
-readSetting :: String -> IO String
+readSetting :: (ToJSON v, FromJSON v) => String -> IO v
 readSetting val = do
   str <- readYamlFile
-  let retval = str ^. key (pack val) :: Maybe String
+  let retval = str ^. key (pack val)
   return (fromJust retval)
 
-readSetting' :: String -> String -> IO String
-readSetting' val1 val2 = do
+readSettingkeys :: (ToJSON v, FromJSON v) => String -> String -> IO v
+readSettingkeys val1 val2 = do
   str <- readYamlFile
-  let retval = str ^. key (pack val1) ^. key (pack val2) :: Maybe String
+  let retval = str ^. key (pack val1) ^. key (pack val2)
   return (fromJust retval)
-
--- | set @val@ to @keyval@ place in Yaml
-setSetting :: String -> String -> IO (Maybe Value -> Maybe Value)
-setSetting val keyval = do
-  str <- readYamlFile
-  let retval = key (pack val) .~ (Just keyval) :: Maybe Value -> Maybe Value
-  return retval
 
 -- | read setting from yaml
 readYamlFile :: IO (Maybe Value)

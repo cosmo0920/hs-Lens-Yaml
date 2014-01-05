@@ -2,3 +2,5 @@ dist*
 cabal-dev/
 *.swp
 *.DS_Store
+cabal.sandbox.config
+.cabal-sandbox/
